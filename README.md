@@ -310,7 +310,7 @@ Columns:
 
 | Column | Description |
 |----------|----------|
-| id | Record ID |  .
+| id | Record ID |  
 | timestamp | Monitoring Time |
 | website | Website URL |
 | hash | SHA-256 Fingerprint |
