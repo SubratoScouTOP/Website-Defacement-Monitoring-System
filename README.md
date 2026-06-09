@@ -2,7 +2,7 @@
 
 ## Overview
 
- hello there this an Website Defacement Monitoring System is a cybersecurity project that continuously monitors a website for unauthorized content modifications.
+ Website Defacement Monitoring System is a cybersecurity project that continuously monitors a website for unauthorized content modifications.
 
 The system periodically fetches a website, extracts its DOM structure, generates a cryptographic hash, and compares it with previously stored snapshots. If significant changes are detected, the system alerts the administrator and stores evidence for further investigation.
 
