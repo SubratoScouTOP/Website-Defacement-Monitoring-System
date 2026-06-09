@@ -2,10 +2,18 @@ import sqlite3
 from pathlib import Path
 from datetime import datetime
 
-DATABASE_PATH = Path(__file__).resolve().parent.parent / "data" / "hashes.db"
+# Database location
+DATABASE_PATH = (
+    Path(__file__).resolve().parent.parent
+    / "data"
+    / "hashes.db"
+)
 
 
 def create_database():
+    """
+    Create database and table if they do not exist.
+    """
 
     connection = sqlite3.connect(DATABASE_PATH)
 
@@ -17,7 +25,8 @@ def create_database():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         timestamp TEXT NOT NULL,
         website TEXT NOT NULL,
-        hash TEXT NOT NULL
+        hash TEXT NOT NULL,
+        dom_content TEXT NOT NULL
     )
     """)
 
@@ -25,19 +34,33 @@ def create_database():
     connection.close()
 
 
-def save_hash(website, hash_value):
+def save_hash(
+    website,
+    hash_value,
+    dom_content
+):
+    """
+    Save website hash and DOM content.
+    """
 
     connection = sqlite3.connect(DATABASE_PATH)
 
     cursor = connection.cursor()
 
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = datetime.now().strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
 
     cursor.execute("""
     INSERT INTO website_hashes
-    (timestamp, website, hash)
-    VALUES (?, ?, ?)
-    """, (timestamp, website, hash_value))
+    (timestamp, website, hash, dom_content)
+    VALUES (?, ?, ?, ?)
+    """, (
+        timestamp,
+        website,
+        hash_value,
+        dom_content
+    ))
 
     connection.commit()
     connection.close()
@@ -46,6 +69,9 @@ def save_hash(website, hash_value):
 
 
 def get_latest_hash(website):
+    """
+    Get latest hash for a website.
+    """
 
     connection = sqlite3.connect(DATABASE_PATH)
 
@@ -69,6 +95,35 @@ def get_latest_hash(website):
     return None
 
 
+def get_latest_dom(website):
+    """
+    Get latest DOM content for a website.
+    """
+
+    connection = sqlite3.connect(DATABASE_PATH)
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT dom_content
+    FROM website_hashes
+    WHERE website = ?
+    ORDER BY id DESC
+    LIMIT 1
+    """, (website,))
+
+    result = cursor.fetchone()
+
+    connection.close()
+
+    if result:
+        return result[0]
+
+    return None
+
+
 if __name__ == "__main__":
+
     create_database()
+
     print("Database ready.")

@@ -1,0 +1,18 @@
+# Virtual Environment
+venv/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Database
+data/hashes.db
+
+# Logs
+logs/
+
+# Snapshots
+snapshots/
+
+# VS Code
+.vscode/
