@@ -1,255 +1,138 @@
-# Website Defacement Monitoring System
+# 🛡️ Website Defacement Monitoring System
 
-## Overview
-
- Website Defacement Monitoring System is a cybersecurity project that continuously monitors a website for unauthorized content modifications.
-
-The system periodically fetches a website, extracts its DOM structure, generates a cryptographic hash, and compares it with previously stored snapshots. If significant changes are detected, the system alerts the administrator and stores evidence for further investigation.
-
-This project demonstrates concepts such as:
-
-- Website Integrity Monitoring
-- Digital Fingerprinting
-- Change Detection
-- Similarity Analysis
-- Severity Classification
-- Logging and Auditing
-- Snapshot Preservation
+A Python-based Website Defacement Monitoring System that continuously monitors websites, detects unauthorized content changes, classifies their severity, stores historical records, sends email alerts, and provides an admin dashboard for monitoring activities.
 
 ---
 
-## Problem Statement
-
-Create a tool that takes periodic snapshots of a website's DOM structure and hashes it.
-
-If the hash changes significantly, alert the administrator to potential unauthorized website defacement.
-
----
-
-## Features
-
-### Website Monitoring
-
-- Periodically fetches target website content.
-- Extracts website DOM structure.
-- Creates unique SHA-256 fingerprints.
-
-### Change Detection
-
-- Compares current fingerprint with previous fingerprints.
-- Detects unauthorized modifications.
-
-### Similarity Analysis
-
-- Measures similarity between old and new DOM structures.
-- Calculates percentage difference.
-
-### Severity Classification
-
-Classifies detected changes into:
-
-- LOW
-- MEDIUM
-- HIGH
-- CRITICAL
-
-based on similarity percentage.
-
-### Snapshot Storage
-
-Stores HTML snapshots whenever significant changes are detected.
-
-### Logging System
-
-Maintains audit logs for:
-
-- Website checks
-- Change detections
-- Snapshot creation
-- Monitoring activities
-
-### Database Storage
-
-Stores:
-
-- Timestamp
-- Website URL
-- Hash Value
-- DOM Content
-
-using SQLite.
-
----
-
-## Technologies Used
-
-| Technology | Purpose |
-|------------|----------|
-| Python | Core Development |
-| Requests | Website Fetching |
-| BeautifulSoup | DOM Parsing |
-| SQLite | Database Storage |
-| Schedule | Periodic Monitoring |
-| SHA-256 | Fingerprinting |
-| Git & GitHub | Version Control |
-
----
-
-## Project Structure
-
-Website_Defacement_Monitor
-
-├── config.py
-
-├── README.md
-
-├── requirements.txt
-
-├── data
-
-│ └── hashes.db
-
-├── logs
-
-│ └── monitor.log
-
-├── snapshots
-
-│ └── snapshot files
-
-├── src
-
-│ ├── fetcher.py
-
-│ ├── parser.py
-
-│ ├── hasher.py
-
-│ ├── database.py
-
-│ ├── detector.py
-
-│ ├── similarity.py
-
-│ ├── severity.py
-
-│ ├── logger.py
-
-│ ├── snapshot_manager.py
-
-│ └── monitor.py
-
-└── venv
-
----
-
-## Project Workflow
-
-### Step 1: Website Fetching
-
-The system fetches website content using the Requests library.
-
-↓
-
-### Step 2: DOM Extraction
-
-BeautifulSoup extracts and normalizes the DOM structure.
-
-↓
-
-### Step 3: Hash Generation
-
-SHA-256 generates a unique fingerprint of the DOM.
-
-↓
-
-### Step 4: Database Lookup
-
-The latest stored hash is retrieved from SQLite.
-
-↓
-
-### Step 5: Change Detection
-
-Current hash is compared with previous hash.
-
-↓
-
-### Step 6: Similarity Analysis
-
-If a change is detected, DOM similarity percentage is calculated.
-
-↓
-
-### Step 7: Severity Classification
-
-The change is classified as:
-
-- LOW
-- MEDIUM
-- HIGH
-- CRITICAL
-
-↓
-
-### Step 8: Snapshot Creation
-
-Modified HTML content is stored as evidence.
-
-↓
-
-### Step 9: Logging
-
-Monitoring activity is recorded in log files.
-
-↓
-
-### Step 10: Continuous Monitoring
-
-The process repeats at fixed intervals.
-
----
-
-## Severity Levels
-
+## 📌 Features
+
+### ✅ Website Monitoring
+- Periodically checks target websites.
+- Automatically fetches webpage content.
+
+### ✅ DOM Parsing
+- Extracts meaningful HTML content.
+- Removes unnecessary formatting noise.
+
+### ✅ SHA-256 Hashing
+- Generates a unique hash for webpage content.
+- Enables fast change detection.
+
+### ✅ Change Detection
+- Detects modifications in website content.
+- Identifies whether content has changed or not.
+
+### ✅ SQLite Database
+- Stores:
+  - Timestamp
+  - Website URL
+  - Hash Value
+  - DOM Content
+
+### ✅ Logging System
+- Records monitoring activities.
+- Maintains event history.
+
+### ✅ Similarity Analysis
+- Compares previous and current webpage content.
+- Calculates similarity percentage.
+
+### ✅ Severity Classification
 | Similarity | Severity |
 |------------|----------|
-| 95% - 100% | LOW |
-| 75% - 94% | MEDIUM |
-| 50% - 74% | HIGH |
-| Below 50% | CRITICAL |
+| ≥95% | LOW |
+| 70%-94% | MEDIUM |
+| 40%-69% | HIGH |
+| <40% | CRITICAL |
+
+### ✅ Snapshot Generation
+- Saves HTML snapshots during severe incidents.
+
+### ✅ Email Alerts
+- Sends email notifications for HIGH and CRITICAL attacks.
+
+### ✅ Automated Monitoring
+- Runs continuously using scheduled checks.
+
+### ✅ Flask Dashboard
+- Provides a simple admin interface.
 
 ---
 
-## Installation
+# 📂 Project Structure
 
-### Clone Repository
+```text
+Website_Defacement_Monitor/
+│
+├── dashboard/
+│   ├── app.py
+│   ├── templates/
+│   │      └── index.html
+│   └── static/
+│          └── style.css
+│
+├── data/
+│
+├── logs/
+│
+├── snapshots/
+│
+├── src/
+│   ├── fetcher.py
+│   ├── parser.py
+│   ├── hasher.py
+│   ├── detector.py
+│   ├── database.py
+│   ├── logger.py
+│   ├── similarity.py
+│   ├── severity.py
+│   ├── snapshot_manager.py
+│   ├── email_alert.py
+│   └── monitor.py
+│
+├── config.py
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+---
+
+# ⚙️ Installation
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/SubratoScouTOP/Website-Defacement-Monitoring-System.git
 ```
 
-### Move into Project
+Move into the project:
 
 ```bash
 cd Website-Defacement-Monitoring-System
 ```
 
-### Create Virtual Environment
+Create virtual environment:
 
 ```bash
 python -m venv venv
 ```
 
-### Activate Environment
+Activate virtual environment:
 
-Windows:
+### Windows
 
 ```bash
-venv\Scripts\Activate.ps1
+venv\Scripts\activate
 ```
 
-### Install Dependencies
+### Linux/Mac
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -257,15 +140,9 @@ pip install -r requirements.txt
 
 ---
 
-## Configuration
+# ⚙️ Configuration
 
-Open:
-
-```python
-config.py
-```
-
-Configure:
+Modify `config.py`:
 
 ```python
 TARGET_URL = "https://example.com"
@@ -275,65 +152,146 @@ CHECK_INTERVAL = 1
 TIMEOUT = 10
 ```
 
+For email alerts:
+
+```python
+SMTP_SERVER = "smtp.gmail.com"
+
+SMTP_PORT = 587
+
+EMAIL_SENDER = "your_email@gmail.com"
+
+EMAIL_PASSWORD = "your_app_password"
+
+EMAIL_RECEIVER = "receiver@gmail.com"
+```
+
 ---
 
-## Running the Project
+# 🚀 Running the Monitor
 
 ```bash
 python src/monitor.py
 ```
 
-Expected Output:
+---
+
+# 🌐 Running the Dashboard
+
+```bash
+python dashboard/app.py
+```
+
+Open:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+# 🔄 Workflow
 
 ```text
-Current Hash:
-xxxxxxxxxxxxxxxxxxxxxxxx
-
-Detection Result:
-No changes detected.
-
-Monitoring started...
-Checking every 1 minute(s).
+Target Website
+       │
+       ▼
+fetcher.py
+       │
+       ▼
+parser.py
+       │
+       ▼
+hasher.py
+       │
+       ▼
+detector.py
+       │
+       ▼
+database.py
+       │
+       ▼
+similarity.py
+       │
+       ▼
+severity.py
+       │
+       ▼
+HIGH / CRITICAL ?
+       │
+ ┌─────┴─────┐
+ │           │
+No          Yes
+ │           │
+ ▼           ▼
+Continue  snapshot_manager.py
+                │
+                ▼
+          email_alert.py
+                │
+                ▼
+             logger.py
+                │
+                ▼
+          Flask Dashboard
 ```
 
 ---
 
-## Database Schema
+# 📧 Alert Mechanism
 
-Table:
+When a website is modified:
 
-```sql
-website_hashes
-```
-
-Columns:
-
-| Column | Description |
-|----------|----------|
-| id | Record ID |  
-| timestamp | Monitoring Time |
-| website | Website URL |
-| hash | SHA-256 Fingerprint |
-| dom_content | Stored DOM |
+1. Detect change.
+2. Calculate similarity percentage.
+3. Determine severity level.
+4. Save HTML snapshot (HIGH/CRITICAL).
+5. Send email alert.
+6. Log the incident.
+7. Store information in database.
 
 ---
 
-## Future Enhancements
+# 🛠 Technologies Used
 
-- Email Alerts
-- Telegram Notifications
-- Web Dashboard
-- Multi-Website Monitoring
-- Machine Learning Based Anomaly Detection
-- Real-Time Visualization
+- Python
+- Flask
+- SQLite3
+- Requests
+- BeautifulSoup4
+- hashlib
+- difflib
+- smtplib
+- Schedule
+- HTML
+- CSS
 
 ---
 
-## Author
+# Future Improvements
 
-Subrato Mahato
+- React Dashboard
+- Live Monitoring
+- Auto Refresh
+- Charts and Statistics
+- Multiple Website Monitoring
+- User Authentication
+- Docker Deployment
+- Cloud Deployment
+- REST API
+- SMS Notifications
 
-Cybersecurity Summer Project
+---
 
-Website Defacement Monitoring System
+# Author
 
+**Subrato Mahato**
+
+GitHub:
+https://github.com/SubratoScouTOP
+
+---
+
+# License
+
+This project is intended for educational and research purposes.
