@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Defacement Monitoring Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <meta http-equiv="refresh" content="30">
+</head>
+
+<body>
+
+    <header>
+
+        <h1>
+            Website Defacement Monitoring System
+        </h1>
+
+    </header>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>Latest Website Status</h2>
+
+            {% if latest %}
+
+                <p>
+                    <strong>Timestamp:</strong>
+                    {{ latest[0] }}
+                </p>
+
+                <p>
+                    <strong>Website:</strong>
+                    {{ latest[1] }}
+                </p>
+
+                <p>
+                    <strong>Hash:</strong>
+                    {{ latest[2] }}
+                </p>
+
+                <p class="safe">
+                    SAFE
+                </p>
+
+            {% else %}
+
+                <p>
+                    No monitoring data found.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Recent Logs</h2>
+
+            <div class="logs">
+
+                {% for log in logs %}
+
+                    <p>{{ log }}</p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Snapshots</h2>
+
+            <div class="snapshots">
+
+                {% if snapshots %}
+
+                    <ul>
+
+                        {% for snapshot in snapshots %}
+
+                            <li>
+                                {{ snapshot }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                {% else %}
+
+                    <p>
+                        No snapshots available.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

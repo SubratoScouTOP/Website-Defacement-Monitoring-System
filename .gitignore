@@ -1,18 +1,9 @@
-# Virtual Environment
-venv/
-
-# Python Cache
 __pycache__/
 *.pyc
 
-# Database
-data/hashes.db
-
-# Logs
+data/
 logs/
 
-# Snapshots
-snapshots/
+venv/
 
-# VS Code
-.vscode/
+snapshots/

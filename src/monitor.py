@@ -27,6 +27,8 @@ from logger import write_log
 from similarity import calculate_similarity
 from severity import get_severity
 
+from email_alert import send_alert
+
 
 def monitor_website():
 
@@ -91,7 +93,7 @@ def monitor_website():
     elif result == "CHANGED":
 
         print(
-            "Website content changed."
+            "WARNING: Website content changed!"
         )
 
         write_log(
@@ -110,7 +112,7 @@ def monitor_website():
             )
 
             print(
-                f"Similarity: {similarity_score}%"
+                f"Similarity: {similarity_score:.2f}%"
             )
 
             print(
@@ -118,13 +120,14 @@ def monitor_website():
             )
 
             write_log(
-                f"Similarity: {similarity_score}%"
+                f"Similarity: {similarity_score:.2f}%"
             )
 
             write_log(
                 f"Severity: {severity}"
             )
 
+            # Send alert only for serious attacks
             if severity in [
                 "HIGH",
                 "CRITICAL"
@@ -137,6 +140,32 @@ def monitor_website():
                 write_log(
                     "Snapshot saved."
                 )
+
+                email_sent = send_alert(
+                    TARGET_URL,
+                    severity,
+                    similarity_score
+                )
+
+                if email_sent:
+
+                    print(
+                        "Alert email sent successfully."
+                    )
+
+                    write_log(
+                        "Alert email sent."
+                    )
+
+                else:
+
+                    print(
+                        "Failed to send alert email."
+                    )
+
+                    write_log(
+                        "Failed to send alert email."
+                    )
 
     save_hash(
         TARGET_URL,
@@ -172,4 +201,5 @@ if __name__ == "__main__":
     while True:
 
         schedule.run_pending()
+
         time.sleep(1)
